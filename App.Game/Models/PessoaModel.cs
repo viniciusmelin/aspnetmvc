@@ -10,6 +10,11 @@ namespace App.Game.Models
     [Table("pessoa")]
     public class PessoaModel
     {
+        public PessoaModel()
+        {
+            PessoaMe = new HashSet<PessoaModel>();
+            PessoaFrinds = new HashSet<PessoaModel>();
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(Order = 0)]

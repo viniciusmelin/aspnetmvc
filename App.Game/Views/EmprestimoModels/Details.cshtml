@@ -1,0 +1,51 @@
+﻿@model App.Game.Models.EmprestimoModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EmprestimoModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Game.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Game.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_emprestimo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_emprestimo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_devolucao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_devolucao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_devolvido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_devolvido)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

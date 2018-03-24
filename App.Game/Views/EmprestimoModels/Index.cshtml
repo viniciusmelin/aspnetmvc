@@ -1,0 +1,52 @@
+﻿@model IEnumerable<App.Game.Models.EmprestimoModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Game.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Data_emprestimo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Data_devolucao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Data_devolvido)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Game.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data_emprestimo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data_devolucao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data_devolvido)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

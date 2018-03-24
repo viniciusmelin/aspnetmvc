@@ -190,6 +190,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EmprestimoModelsController.cs" />
     <Compile Include="Controllers\GameModelsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -205,6 +206,10 @@
     <Compile Include="Models\PessoaModel.cs" />
     <Compile Include="Models\PessoaGameModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="repository\DbContextImplementar.cs" />
+    <Compile Include="repository\IContextDB.cs" />
+    <Compile Include="repository\Repository.cs" />
+    <Compile Include="repository\IRepositorio.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +217,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\demo.css" />
+    <Content Include="Content\iconsbutton.css" />
     <Content Include="Content\light-bootstrap-dashboard.css" />
     <Content Include="Content\pe-icon-7-stroke.css" />
     <Content Include="favicon.ico" />
@@ -283,6 +289,11 @@
     <Content Include="Views\GameModels\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Account\StartLogin.cshtml" />
+    <Content Include="Views\EmprestimoModels\Create.cshtml" />
+    <Content Include="Views\EmprestimoModels\Delete.cshtml" />
+    <Content Include="Views\EmprestimoModels\Details.cshtml" />
+    <Content Include="Views\EmprestimoModels\Edit.cshtml" />
+    <Content Include="Views\EmprestimoModels\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

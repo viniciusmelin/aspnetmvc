@@ -1,0 +1,57 @@
+﻿@model App.Game.Models.EmprestimoModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>EmprestimoModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Game.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Game.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_emprestimo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_emprestimo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_devolucao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_devolucao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_devolvido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_devolvido)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
