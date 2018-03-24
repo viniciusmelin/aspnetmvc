@@ -17,6 +17,7 @@ namespace App.Game.Controllers
         // GET: GameModels
         public ActionResult Index()
         {
+            ViewBag.Title = "Inicial";
             return View(db.Game.ToList());
         }
 
