@@ -39,8 +39,18 @@ namespace App.Game.Controllers
         // GET: EmprestimoModels/Create
         public ActionResult Create()
         {
+            //  IEnumerable<GameModel> c = db.PessoaGame.Where(e => e.pessoa_pessoa_id == pessoa.Id).Select(e => e.Game);
+            PessoaModel pessoa = db.Pessoa.Where(d => d.Id == 1).First();
+
             ViewBag.Game_id = new SelectList(db.Game, "GameId", "Descricao");
-            return View();
+            //PessoaModel pessoa1 = db.Pessoa.Where(d => d.Id == 2).First();
+            //IList<PessoaModel> dada = db.Pessoa.Where(c => c.PessoaFrinds.Any(y => y.PessoaFrinds == pessoa)).ToList();
+            IEnumerable<PessoaModel> query = pessoa.PessoaFriends.ToList();
+            EmprestimoViewModel emp = new EmprestimoViewModel();
+            emp.EmprestimoModel = new EmprestimoModel();
+            emp.Amigo = new PessoaModel();
+            ViewBag.Amigo_id = new SelectList(query,"Id","Nome");
+            return View(emp);
         }
 
         // POST: EmprestimoModels/Create
@@ -48,16 +58,16 @@ namespace App.Game.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Game_id,Data_emprestimo,Data_devolucao,Data_devolvido")] EmprestimoModel emprestimoModel)
+        public ActionResult Create([Bind(Include = "Id,Game_id,Data_emprestimo,Data_devolucao,Data_devolvido,")] EmprestimoViewModel emprestimoModel)
         {
             if (ModelState.IsValid)
             {
-                db.Emprestismo.Add(emprestimoModel);
+                db.Emprestismo.Add(emprestimoModel.EmprestimoModel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Game_id = new SelectList(db.Game, "GameId", "Descricao", emprestimoModel.Game_id);
+            ViewBag.Game_id = new SelectList(db.Game, "GameId", "Descricao", emprestimoModel.EmprestimoModel.Game_id);
             return View(emprestimoModel);
         }
 

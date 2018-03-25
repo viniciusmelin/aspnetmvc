@@ -39,7 +39,8 @@ namespace App.Game.Models
        
        public DbSet<GameModel> Game { get; set; }
        public DbSet<PessoaGameModel> PessoaGame { get; set; }
+       // public DbSet<AmigoModel> PessoaAmigo { get; set; }
 
-       public DbSet<EmprestimoModel> Emprestismo { get; set; }
+        public DbSet<EmprestimoModel> Emprestismo { get; set; }
     }
 }

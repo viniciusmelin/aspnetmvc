@@ -28,23 +28,32 @@ namespace App.Game.Models
         [Column(Order = 1)]
         public int Game_id { get; set; }
 
+        [DataType(DataType.Date)]
         [Display(Name = "Data Emprestimo")]
         [Column(TypeName = "datetime2")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{dd/MM/yyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{dd/MM/yyy}")]
         public DateTime Data_emprestimo { get; set; } = DateTime.Now;
 
+        [DataType(DataType.Date)]
         [Display(Name = "Data Devolução")]
         [Column(TypeName = "datetime2")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{dd/MM/yyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{dd/MM/yyy}")]
         public DateTime Data_devolucao { get; set; }
 
         [Display(Name = "Data Devolvido")]
+        [DataType(DataType.Date)]
         [Column(TypeName = "datetime2")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{dd/MM/yyy}")]
-        public DateTime Data_devolvido { get; set; }
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{dd/MM/yyy}")]
+        public Nullable<DateTime> Data_devolvido { get; set; }
 
         public virtual PessoaModel PessoaSolicitada { get; set; }
         public virtual PessoaModel PessoaSolicitante { get; set; }
         public virtual GameModel Game { get; set; }
     }
+
+    public class EmprestimoViewModel {
+        public EmprestimoModel EmprestimoModel { get; set; }
+        public PessoaModel Amigo { get; set; }
+    }
+
 }

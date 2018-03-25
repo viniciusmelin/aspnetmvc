@@ -13,7 +13,7 @@ namespace App.Game.Models
         public PessoaModel()
         {
             PessoaMe = new HashSet<PessoaModel>();
-            PessoaFrinds = new HashSet<PessoaModel>();
+            PessoaFriends = new HashSet<PessoaModel>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -40,9 +40,12 @@ namespace App.Game.Models
         public string ApplicationUserID { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
 
-        public virtual ICollection<PessoaModel> PessoaMe { get; set; }
-        public virtual ICollection<PessoaModel> PessoaFrinds { get; set; }
 
+
+        public virtual ICollection<PessoaModel> PessoaMe { get; set; }
+
+
+        public virtual ICollection<PessoaModel> PessoaFriends { get; set; }
 
     }
 }
