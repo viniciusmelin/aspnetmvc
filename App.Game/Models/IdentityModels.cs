@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -27,9 +28,14 @@ namespace App.Game.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+           
         }
 
-       
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            base.OnModelCreating(modelBuilder);
+        }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
@@ -39,7 +45,7 @@ namespace App.Game.Models
        
        public DbSet<GameModel> Game { get; set; }
        public DbSet<PessoaGameModel> PessoaGame { get; set; }
-       // public DbSet<AmigoModel> PessoaAmigo { get; set; }
+        public DbSet<AmigoModel> PessoaAmigo { get; set; }
 
         public DbSet<EmprestimoModel> Emprestismo { get; set; }
     }

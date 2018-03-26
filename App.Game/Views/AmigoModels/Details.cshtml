@@ -1,0 +1,56 @@
+﻿@model App.Game.Models.AmigoModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h2>Details</h2>
+
+    <div>
+        <h4>AmigoModel</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.PessoaFriends.Nome)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PessoaFriends.Nome)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PessoaMe.Nome)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PessoaMe.Nome)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
+
+
+<div class="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Detalhes Amigo</h4>
+            </div>
+            <div class="modal-body">
+                <p>Eu : @Html.DisplayNameFor(model => model.PessoaMe.Nome)</p>
+                <p>Amigo : @Html.DisplayFor(model => model.PessoaFriends.Nome)</p>
+
+                @*<p>@Html.DisplayNameFor(model => model) : @Html.DisplayFor(model => model.Preco)</p>*@
+            </div>
+            <div class="container">
+                @Html.ActionLink("Voltar", "Index", "AmigoModels", new { @class = "btn btn-md btn-danger" })
+               @* @Html.ActionLink("Editar", "Edit", new { id = Model. }, new { @class = "btn btn-md btn-warning" })*@
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

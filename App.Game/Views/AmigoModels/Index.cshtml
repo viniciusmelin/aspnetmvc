@@ -1,0 +1,87 @@
+﻿@model IEnumerable<App.Game.Models.AmigoModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PessoaFriends.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PessoaMe.Nome)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PessoaFriends.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PessoaMe.Nome)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PessoaMeId, idamigo = item.PessoaFriendsId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.PessoaMeId, idamigo = item.PessoaFriendsId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.PessoaMeId, idamigo = item.PessoaFriendsId })
+        </td>
+    </tr>
+}
+
+</table>*@
+
+
+
+<div class="container">
+    <p>
+        <a href="@Url.Action("Create", "GameModels")"><i class="glyphicon glyphicon-plus-sign"></i> Novo Game</a>
+
+    </p>
+    <div class="card">
+        <div class="header">
+            <h4 class="title">Lista Amigos</h4>
+        </div>
+        <div class="content table-responsive table-full-width">
+            <table class="table table-hover table-striped">
+                <thead>
+
+                    <tr>
+                        <th>
+                            @Html.Raw("Amigos".ToString())
+                        </th>
+                        <th> Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PessoaFriends.Nome)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", "AmigoModels", new { id = item.PessoaMeId, idamigo = item.PessoaFriendsId  })"><i class="glyphicon glyphicon-edit btn btn-warning btn-sm"></i></a>
+                                <a href="@Url.Action("Details", "AmigoModels", new { id = item.PessoaMeId, idamigo = item.PessoaFriendsId })"><i class="glyphicon glyphicon-search btn btn-info btn-sm"></i></a>
+
+                                <a href="@Url.Action("Delete", "AmigoModels", new { id = item.PessoaMeId, idamigo = item.PessoaFriendsId })"><i class="glyphicon glyphicon-trash btn btn-danger btn-sm"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>

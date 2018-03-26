@@ -5,48 +5,80 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Game.Descricao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Data_emprestimo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Data_devolucao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Data_devolvido)
-        </th>
-        <th></th>
-    </tr>
+<div class="container">
+    <p>
+        <a href="@Url.Action("Create", "EmprestimoModels")"><i class="glyphicon glyphicon-plus-sign"></i> Novo Emprestimo</a>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Game.Descricao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Data_emprestimo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Data_devolucao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Data_devolvido)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    </p>
+    <div class="card">
+        <div class="header">
+            <h4 class="title">Registrar Emprestismo</h4>
+        </div>
+        <div class="content table-responsive table-full-width">
+            <table class="table table-hover table-striped">
+                <thead>
+                <th>
+                    @Html.DisplayNameFor(model => model.Game.Descricao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Data_emprestimo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Data_devolucao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Data_devolvido)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PessoaSolicitada.Nome)
+                </th>
+                <th> Ação</th>
+                </tr>
 
-</table>
+
+
+                </thead>
+                <tbody>
+
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Game.Descricao)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data_emprestimo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data_devolucao)
+                            </td>
+                            <td>
+                                @if (item.Data_devolvido != null)
+                                {
+                                    @Html.DisplayFor(modelItem => item.Data_devolvido)
+                                }
+                                else
+                                {
+                                    @Html.Raw("<strong>Não</strong>".ToString());
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PessoaSolicitante.Nome)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", "EmprestimoModels", new { id = item.Id })"><i class="glyphicon glyphicon-edit btn btn-warning btn-sm"></i></a>
+                                <a href="@Url.Action("Details", "EmprestimoModels", new { id = item.Id })"><i class="glyphicon glyphicon-search btn btn-info btn-sm"></i></a>
+
+                                <a href="@Url.Action("Delete", "EmprestimoModels", new { id = item.Id })"><i class="glyphicon glyphicon-trash btn btn-danger btn-sm"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>

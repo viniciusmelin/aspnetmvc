@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+@*<h2>Details</h2>
 
 <div>
     <h4>EmprestimoModel</h4>
@@ -48,4 +48,29 @@
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
-</p>
+</p>*@
+
+
+<div class="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Detalhes do Jogo</h4>
+            </div>
+            <div class="modal-body">
+                <p>@Html.DisplayNameFor(model => model.Game.Descricao) : @Html.DisplayFor(model => model.Game.Descricao)</p>
+                <p>@Html.DisplayNameFor(model => model.Data_emprestimo)) : @Html.DisplayFor(model => model.Data_emprestimo))</p>
+                <p>@Html.DisplayNameFor(model => model.Data_devolucao) : @Html.DisplayFor(model => model.Data_devolucao)</p>
+                <p>@Html.DisplayNameFor(model => model.Data_devolvido) : @Html.DisplayFor(model => model.Data_devolvido)</p>
+                <p>@Html.DisplayNameFor(model => model.PessoaSolicitante.Nome) : @Html.DisplayFor(model => model.PessoaSolicitante.Nome)</p>
+
+                @*<p>@Html.DisplayNameFor(model => model) : @Html.DisplayFor(model => model.Preco)</p>*@
+            </div>
+            <div class="container">
+                @Html.ActionLink("Voltar", "Index", "EmprestimoModels", new { @class = "btn btn-md btn-danger" })
+                @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-md btn-warning" })
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

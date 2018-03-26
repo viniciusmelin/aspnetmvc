@@ -5,9 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (@ViewBag.classe != null)
+{
+<span class="hidden informacao" data-title="@ViewBag.titulo">@ViewBag.msg</span>
+}
 
-
-<div class="container-fluid">
+<div class="container">
     <p>
         <a href="@Url.Action("Create", "GameModels")"><i class="glyphicon glyphicon-plus-sign"></i> Novo Game</a>
 
@@ -39,33 +42,40 @@
                 </thead>
                 <tbody>
 
-
                     @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.GameId)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Descricao)
-                            </td>
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GameId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descricao)
+                        </td>
 
-                            <td>
-                                <a href="@Url.Action("Edit", "GameModels", new { id = item.GameId })"><i class="glyphicon glyphicon-edit btn btn-warning btn-sm"></i></a>
-                                <a href="@Url.Action("Details", "GameModels", new { id = item.GameId })"><i class="glyphicon glyphicon-search btn btn-info btn-sm"></i></a>
-                                <a href="@Url.Action("Edit", "GameModels", new { id = item.GameId })"><i class="glyphicon glyphicon-trash btn btn-danger btn-sm"></i></a>
-                                @*@Html.ActionLink("Edit", "Edit", new { id = item.GameId }) |*@
-                                @Html.ActionLink("Details", "Details", new { id = item.GameId }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.GameId })
-                            </td>
-                        </tr>
-                    }
+                        <td>
+                            <a href="@Url.Action("Edit", "GameModels", new { id = item.GameId })"><i class="glyphicon glyphicon-edit btn btn-warning btn-sm"></i></a>
+                            <a href="@Url.Action("Details", "GameModels", new { id = item.GameId })"><i class="glyphicon glyphicon-search btn btn-info btn-sm"></i></a>
 
+                            <a href="@Url.Action("Delete", "GameModels", new { id = item.GameId })"><i class="glyphicon glyphicon-trash btn btn-danger btn-sm"></i></a>
+                        </td>
+                    </tr>
+            }
                 </tbody>
 
             </table>
         </div>
+       
     </div>
 
 </div>
-
+@section Scripts
+{
+    <script language="javascript" type="text/javascript">
+     $(document).ready(function () {
+         if ($(".informacao").text() != "") {
+             consol.log("ffff");
+             $.notify($(".informacao").text(), "error");
+         }
+     });
+    </script>
+}

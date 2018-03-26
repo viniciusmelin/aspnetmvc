@@ -1,21 +1,192 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model IEnumerable<App.Game.Models.PessoaGameModel>
+@{
+    ViewBag.Title = "Página Inicial";
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-@Html.ActionLink("Home", "Index", "GameModels")
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
+<div class="container-fluid">
+    <div class="col-lg-6">
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            <a href="@Url.Action("Create", "GameModels")"><i class="glyphicon glyphicon-plus-sign"></i> Novo Game</a>
+
         </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <div class="card">
+            <div class="header">
+                <h4 class="title">Todos Jogos Cadastrados no Sistema</h4>
+            </div>
+            <div class="container">
+                <div class="content table-responsive table-full-width">
+                    <table id="todosgame" class="table table-hover table-striped">
+                        <thead>
+
+                            <tr>
+                                <th>
+
+                                    @Html.Raw("Código".ToString())
+
+                                </th>
+                                <th>
+
+                                    @Html.Raw("Nome".ToString())
+
+                                </th>
+                                
+                            </tr>
+
+
+
+                        </thead>
+                        <tbody id="pessoaBody"></tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-6">
+        <p>
+            <a href="@Url.Action("Create", "EmprestimoModels")"><i class="glyphicon glyphicon-plus-sign"></i> Novo Emprestimo</a>
+
+        </p>
+        <div class="card">
+            <div class="header">
+                <h4 class="title">Todos Emprestimos Realizados no Sistema</h4>
+            </div>
+            <div class="container">
+                <div class="content table-responsive table-full-width">
+                    <table id="todosemprestimo" class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+
+                                    @Html.Raw("Código".ToString())
+
+                                </th>
+                                <th>
+
+                                    @Html.Raw("Jogo".ToString())
+
+                                </th>
+                                <th>
+
+                                    @Html.Raw("De".ToString())
+
+                                </th>
+                                <th>
+
+                                    @Html.Raw("Para".ToString())
+
+                                </th>
+                            </tr>
+
+
+
+                        </thead>
+                        <tbody"></tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
+
+
+@*<div class="container">
+        <h2>Modal Example</h2>
+        <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+        <!-- Modal -->
+
+
+    </div>*@
+
+
+@section Scripts
+{
+
+<script>
+    $(document).ready(function () {
+        console.log("@Url.Action("Json","Home")");
+        $.ajax({
+             url: "@Url.Action("TodosEmprestimo", "Home")",
+             tye: "POST",
+             datatype: "json",
+             data: {},
+             success: function (data)
+             {
+                 console.log(data);
+             }
+        });
+
+$("#todosemprestimo").DataTable({
+    "ajax": {
+        "url": "@Url.Action("TodosEmprestimo", "Home")",
+        "tye": "POST",
+        "datatype": "json",
+    },
+    "columns": [
+
+        {
+            "data": function (row, type, set) {
+               
+                return row.Game.GameId;
+            }
+        },
+        {
+            "data": function (row, type, set) {
+
+                return row.Game.Descricao;
+            }
+        },
+        {
+            "data": function (row, type, set) {
+               
+  
+                    return row.PessoaSolicitada.Nome;
+
+                
+            }
+        },
+        {
+            "data": function (row, type, set) {
+                return row.PessoaSolicitante.Nome;
+                
+            }
+        }
+
+    ]
+});
+
+        $("#todosgame").DataTable({
+            "ajax": {
+                "url": "@Url.Action("Json", "Home")",
+                "tye": "POST",
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "GameId", "autowidth": true },
+                { "data": "Descricao", "autowidth": true }
+                @*{
+                    "className": 'options',
+                    "data": null,
+                    "render": function (data, type, full, meta) {
+                        if (full.activated) {
+                            return '<button class="btn btn-mini btn-primary pull-right" data-url="@Html.Action("Edit","GameModels",new { id =3})"> Enabled</button>';
+                        } else {
+                           // console.log(data.GameId);
+                            return '<a href="@Url.Action("Details","GameModels")/' + data.GameId +'"><i class="glyphicon glyphicon-search btn btn-info btn-sm"></a>'
+                        }
+                    }
+                }*@
+
+            ]
+        });
+
+
+
+    });
+
+</script>
+}

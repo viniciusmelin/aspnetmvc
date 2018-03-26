@@ -17,12 +17,12 @@ namespace App.Game.Models
 
         //[ForeignKey("Pessoa")]
         //[Column(Order =1)]
-        //public int solicitante_id { get; set; }
+        public int Solicitante_id { get; set; }
 
 
-        //[ForeignKey("Pessoa")]
+        
         //[Column(Order = 2)]
-        //public int solicitado_id { get; set; }
+        public int Solicitado_id { get; set; }
 
         [ForeignKey("Game")]
         [Column(Order = 1)]
@@ -31,29 +31,29 @@ namespace App.Game.Models
         [DataType(DataType.Date)]
         [Display(Name = "Data Emprestimo")]
         [Column(TypeName = "datetime2")]
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{dd/MM/yyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+
         public DateTime Data_emprestimo { get; set; } = DateTime.Now;
 
         [DataType(DataType.Date)]
         [Display(Name = "Data Devolução")]
         [Column(TypeName = "datetime2")]
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{dd/MM/yyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+
         public DateTime Data_devolucao { get; set; }
 
         [Display(Name = "Data Devolvido")]
         [DataType(DataType.Date)]
         [Column(TypeName = "datetime2")]
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{dd/MM/yyy}")]
+ 
         public Nullable<DateTime> Data_devolvido { get; set; }
 
+        [ForeignKey("Solicitado_id")]
         public virtual PessoaModel PessoaSolicitada { get; set; }
+
+        [ForeignKey("Solicitante_id")]
         public virtual PessoaModel PessoaSolicitante { get; set; }
         public virtual GameModel Game { get; set; }
-    }
-
-    public class EmprestimoViewModel {
-        public EmprestimoModel EmprestimoModel { get; set; }
-        public PessoaModel Amigo { get; set; }
     }
 
 }

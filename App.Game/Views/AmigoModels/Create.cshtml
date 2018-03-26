@@ -1,0 +1,94 @@
+﻿@model App.Game.Models.AmigoModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h2>Create</h2>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>AmigoModel</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+
+                <label for="PessoaMeId">EU</label>
+                <div class="col-md-10">
+                    @Html.DropDownList("PessoaMeId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PessoaMeId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label for="PessoaFriendsId">Amigos</label>
+                <div class="col-md-10">
+                    @Html.DropDownList("PessoaFriendsId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PessoaFriendsId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+@using (Html.BeginForm())
+{
+    <div class="col-md-8">
+        <div class="card">
+
+            @Html.AntiForgeryToken()
+
+            <div class="container">
+                <h4 class="subscribe-line">Salvar Jogo</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-5">
+                            <label for="PessoaMeId">Eu</label>
+                            @Html.DropDownList("PessoaMeId", null, htmlAttributes: new { @class = "form-control", @disabled = "disable" })
+                            @Html.ValidationMessageFor(model => model.PessoaMeId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-5">
+                            <label for="PessoaFriendsId">Amigos</label>
+                            @Html.DropDownList("PessoaFriendsId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PessoaFriendsId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="container">
+                <div class="">
+                    <div class="form-group">
+                        @Html.ActionLink("Voltar", "Index", "GameModels", new { @class = "btn btn-md btn-danger" })
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

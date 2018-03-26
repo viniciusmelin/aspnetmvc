@@ -13,28 +13,28 @@ namespace App.Game.Models
     public class AmigoModel
     {
 
+        //[Key]
+        //[Column(Order = 0)]
+        ////[Required]
+        //public int Id { get; set; }
+
         [Key]
         [Column(Order = 0)]
-        //[Required]
-        public int Id { get; set; }
-
-        //[Key]
-        //[Column(Order = 1)]
         //[Required]
         public int PessoaMeId { get; set; }
 
 
-        //[Key]
-        //[Column(Order = 2)]
+        [Key]
+       [Column(Order = 1)]
         //[Required]
         public int PessoaFriendsId { get; set; }
 
 
-        //[ForeignKey("PessoaMeId")]
+        [ForeignKey("PessoaMeId")]
         public virtual PessoaModel PessoaMe { get; set; }
 
 
-        //[ForeignKey("PessoaFriendsId")]
+        [ForeignKey("PessoaFriendsId")]
         public virtual PessoaModel PessoaFriends { get; set; }
 
 
