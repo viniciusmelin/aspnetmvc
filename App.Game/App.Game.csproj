@@ -198,9 +198,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803252027496_Inicial.cs" />
-    <Compile Include="Migrations\201803252027496_Inicial.Designer.cs">
-      <DependentUpon>201803252027496_Inicial.cs</DependentUpon>
+    <Compile Include="Migrations\201803270552280_Inical.cs" />
+    <Compile Include="Migrations\201803270552280_Inical.Designer.cs">
+      <DependentUpon>201803270552280_Inical.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -211,12 +211,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PessoaModel.cs" />
     <Compile Include="Models\PessoaGameModel.cs" />
-    <Compile Include="Models\ViewIndexModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="repository\DbContextImplementar.cs" />
-    <Compile Include="repository\IContextDB.cs" />
-    <Compile Include="repository\Repository.cs" />
-    <Compile Include="repository\IRepositorio.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -609,8 +604,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803252027496_Inicial.resx">
-      <DependentUpon>201803252027496_Inicial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803270552280_Inical.resx">
+      <DependentUpon>201803270552280_Inical.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -18,8 +18,8 @@ namespace App.Game.Controllers
          {
             IList<PessoaGameModel> pessoaGame = db.PessoaGame.Include(e => e.Pessoa).Include(e => e.Game).ToList();
 
-            ViewIndexModel t = new ViewIndexModel();
-            t.PessoaGame = pessoaGame;
+            //ViewIndexModel t = new ViewIndexModel();
+            //t.PessoaGame = pessoaGame;
             
             
             return View(pessoaGame);

@@ -7,13 +7,13 @@ namespace App.Game.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Inicial : IMigrationMetadata
+    public sealed partial class Inical : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Inicial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Inical));
         
         string IMigrationMetadata.Id
         {
-            get { return "201803252027496_Inicial"; }
+            get { return "201803270552280_Inical"; }
         }
         
         string IMigrationMetadata.Source

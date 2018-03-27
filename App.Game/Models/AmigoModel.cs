@@ -13,10 +13,7 @@ namespace App.Game.Models
     public class AmigoModel
     {
 
-        //[Key]
-        //[Column(Order = 0)]
-        ////[Required]
-        //public int Id { get; set; }
+
 
         [Key]
         [Column(Order = 0)]

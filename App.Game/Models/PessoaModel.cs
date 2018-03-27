@@ -41,10 +41,10 @@ namespace App.Game.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
 
 
-
+        [NotMapped]
         public virtual ICollection<PessoaModel> PessoaMe { get; set; }
 
-
+        [NotMapped]
         public virtual ICollection<PessoaModel> PessoaFriends { get; set; }
 
     }

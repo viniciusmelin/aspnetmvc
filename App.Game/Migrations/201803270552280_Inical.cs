@@ -3,7 +3,7 @@ namespace App.Game.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Inicial : DbMigration
+    public partial class Inical : DbMigration
     {
         public override void Up()
         {
@@ -145,19 +145,6 @@ namespace App.Game.Migrations
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
-            CreateTable(
-                "dbo.PessoaModelPessoaModels",
-                c => new
-                    {
-                        PessoaModel_Id = c.Int(nullable: false),
-                        PessoaModel_Id1 = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.PessoaModel_Id, t.PessoaModel_Id1 })
-                .ForeignKey("dbo.pessoa", t => t.PessoaModel_Id)
-                .ForeignKey("dbo.pessoa", t => t.PessoaModel_Id1)
-                .Index(t => t.PessoaModel_Id)
-                .Index(t => t.PessoaModel_Id1);
-            
         }
         
         public override void Down()
@@ -169,15 +156,11 @@ namespace App.Game.Migrations
             DropForeignKey("dbo.amigo", "PessoaFriendsId", "dbo.pessoa");
             DropForeignKey("dbo.emprestimo", "Solicitante_id", "dbo.pessoa");
             DropForeignKey("dbo.emprestimo", "Solicitado_id", "dbo.pessoa");
-            DropForeignKey("dbo.PessoaModelPessoaModels", "PessoaModel_Id1", "dbo.pessoa");
-            DropForeignKey("dbo.PessoaModelPessoaModels", "PessoaModel_Id", "dbo.pessoa");
             DropForeignKey("dbo.pessoa", "ApplicationUserID", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.emprestimo", "Game_id", "dbo.game");
-            DropIndex("dbo.PessoaModelPessoaModels", new[] { "PessoaModel_Id1" });
-            DropIndex("dbo.PessoaModelPessoaModels", new[] { "PessoaModel_Id" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.pessoa_game", new[] { "game_game_id" });
             DropIndex("dbo.pessoa_game", new[] { "pessoa_pessoa_id" });
@@ -192,7 +175,6 @@ namespace App.Game.Migrations
             DropIndex("dbo.emprestimo", new[] { "Solicitado_id" });
             DropIndex("dbo.emprestimo", new[] { "Solicitante_id" });
             DropIndex("dbo.emprestimo", new[] { "Game_id" });
-            DropTable("dbo.PessoaModelPessoaModels");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.pessoa_game");
             DropTable("dbo.amigo");

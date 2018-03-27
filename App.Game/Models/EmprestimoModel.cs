@@ -15,13 +15,8 @@ namespace App.Game.Models
         [Display(Name = "Código")]
         public int Id { get; set; }
 
-        //[ForeignKey("Pessoa")]
-        //[Column(Order =1)]
         public int Solicitante_id { get; set; }
 
-
-        
-        //[Column(Order = 2)]
         public int Solicitado_id { get; set; }
 
         [ForeignKey("Game")]
