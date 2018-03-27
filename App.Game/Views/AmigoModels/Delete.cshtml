@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+@*<h2>Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
@@ -30,7 +30,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
@@ -38,4 +39,44 @@
             @Html.ActionLink("Back to List", "Index")
         </div>
     }
+</div>*@
+
+
+<div class="col-md-5">
+    <div class="card">
+        <div class="container">
+            <h4 class="subscribe-line">Deseja Excluir Jogo Selecionado?</h4>
+            <hr />
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-10">
+                            <label for="">Eu</label>
+                            @Html.TextBoxFor(model => model.PessoaMe.Nome, new { @class = "form-control", disabled = "disabled" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-10">
+                            <label for="">Amigo</label>
+                            @Html.TextBoxFor(model => model.PessoaFriends.Nome, new { @class = "form-control", disabled = "disabled" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <a href="@Url.Action("Index", "AmigoModels")" class="btn btn-danger">Voltar</a>
+                    <input type="submit" value="Delete" class="btn btn-default" />
+
+                </div>
+            }
+
+        </div>
+
+    </div>
 </div>
+

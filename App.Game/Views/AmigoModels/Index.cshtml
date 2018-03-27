@@ -5,45 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PessoaFriends.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PessoaMe.Nome)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.PessoaFriends.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PessoaMe.Nome)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PessoaMeId, idamigo = item.PessoaFriendsId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.PessoaMeId, idamigo = item.PessoaFriendsId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.PessoaMeId, idamigo = item.PessoaFriendsId })
-        </td>
-    </tr>
-}
-
-</table>*@
-
-
 
 <div class="container">
+    @if (ViewBag.classe != null)
+    {
+        <span class="hidden informacao" data-classe="@ViewBag.classe">@ViewBag.msg</span>
+    }
     <p>
-        <a href="@Url.Action("Create", "GameModels")"><i class="glyphicon glyphicon-plus-sign"></i> Novo Game</a>
+        <a href="@Url.Action("Create", "AmigoModels")"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar Amigo</a>
 
     </p>
     <div class="card">
@@ -71,10 +40,10 @@
                                 @Html.DisplayFor(modelItem => item.PessoaFriends.Nome)
                             </td>
                             <td>
-                                <a href="@Url.Action("Edit", "AmigoModels", new { id = item.PessoaMeId, idamigo = item.PessoaFriendsId  })"><i class="glyphicon glyphicon-edit btn btn-warning btn-sm"></i></a>
-                                <a href="@Url.Action("Details", "AmigoModels", new { id = item.PessoaMeId, idamigo = item.PessoaFriendsId })"><i class="glyphicon glyphicon-search btn btn-info btn-sm"></i></a>
+                                <a data-toggle="tooltip" title="Editar" href="@Url.Action("Edit", "AmigoModels", new { id = item.PessoaMeId, idamigo = item.PessoaFriendsId  })"><i class="glyphicon glyphicon-edit btn btn-warning btn-sm"></i></a>
+                                <a data-toggle="tooltip" title="Atualizar" href="@Url.Action("Details", "AmigoModels", new { id = item.PessoaMeId, idamigo = item.PessoaFriendsId })"><i class="glyphicon glyphicon-search btn btn-info btn-sm"></i></a>
 
-                                <a href="@Url.Action("Delete", "AmigoModels", new { id = item.PessoaMeId, idamigo = item.PessoaFriendsId })"><i class="glyphicon glyphicon-trash btn btn-danger btn-sm"></i></a>
+                                <a data-toggle="tooltip" title="Excluir" href="@Url.Action("Delete", "AmigoModels", new { id = item.PessoaMeId, idamigo = item.PessoaFriendsId })"><i class="glyphicon glyphicon-trash btn btn-danger btn-sm"></i></a>
                             </td>
                         </tr>
                     }
@@ -85,3 +54,16 @@
     </div>
 
 </div>
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            if ($(".informacao").text() != "") {
+                $.notify($(".informacao").text(), $(".informacao").data("classe"));
+            }
+
+        });
+    </script>
+
+
+}

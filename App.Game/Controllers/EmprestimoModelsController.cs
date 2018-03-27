@@ -21,7 +21,8 @@ namespace App.Game.Controllers
         public ActionResult Index()
         {
 
-
+            ViewBag.classe = TempData["classe"];
+            ViewBag.msg = TempData["msg"];
             var emprestimo = db.Emprestismo.Include(e => e.PessoaSolicitada).Where(e => e.PessoaSolicitada.ApplicationUserID == user.Id);
             return View(emprestimo.ToList());
         }
@@ -46,14 +47,25 @@ namespace App.Game.Controllers
         {
 
             SelectList game = new SelectList(db.PessoaGame.Include(e => e.Game).Include(e => e.Pessoa).Where(e => e.Pessoa.ApplicationUserID == user.Id && e.Emprestado == false).Select(e => e.Game), "GameId", "Descricao");
-            SelectList amigos = new SelectList(db.PessoaAmigo.Include(a => a.PessoaFriends).Include(e => e.PessoaMe).Where(a => a.PessoaMe.ApplicationUserID == user.Id).Select(a => a.PessoaFriends), "Id", "Nome");
+            SelectList amigos = new SelectList
+                (
+                    db.PessoaAmigo
+                    .Include(a => a.PessoaFriends)
+                    .Include(e => e.PessoaMe)
+                    .Where(a => a.PessoaMe.ApplicationUserID == user.Id && a.PessoaFriendsId != a.PessoaMe.Id)
+                    .Select(a => a.PessoaFriends), "Id", "Nome"
+                );
 
             if (game.Count() == 0)
             {
+                TempData["classe"] = "warning";
+                TempData["msg"] = "Todos seus jogos estão emprestados!";
                 return RedirectToAction("Index");
             }
             if (amigos.Count()==0)
             {
+                TempData["classe"] = "warning";
+                TempData["msg"] = "Você não possui nenhum amigo :( !";
                 return RedirectToAction("Index");
             }
             ViewBag.PessoaFrindsId = amigos;
@@ -82,11 +94,11 @@ namespace App.Game.Controllers
                 };
                 db.Entry(emprestado).State = EntityState.Modified;
 
-
+                TempData["classe"] = "success";
+                TempData["msg"] = "Emprestimo realizado com sucesso!";
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //dei um include pessoame caso erro retirar
             ViewBag.PessoaFrindsId = new SelectList(db.PessoaAmigo.Include(a => a.PessoaFriends).Include(a=>a.PessoaMe).Where(a => a.PessoaMe.ApplicationUser.Id == user.Id).Select(a => a.PessoaFriends), "Id", "Nome");
             ViewBag.Game_id = new SelectList(db.Game, "GameId", "Descricao", emprestimoModel.Game_id);
             return View(emprestimoModel);
@@ -105,7 +117,7 @@ namespace App.Game.Controllers
                 return HttpNotFound();
             }
 
-            // PessoaModel pessoa = db.Pessoa.Where(d => d.Id == 1).First();
+            
             ViewBag.PessoaFrindsId = new SelectList(db.PessoaAmigo.Include(a => a.PessoaFriends).Where(a => a.PessoaMeId == 1).Select(a => a.PessoaFriends), "Id", "Nome");
             ViewBag.Game_id = new SelectList(db.Game, "GameId", "Descricao", emprestimoModel.Game_id);
             return View(emprestimoModel);
@@ -129,6 +141,8 @@ namespace App.Game.Controllers
             {
                 db.Entry(emprestimoModel).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["classe"] = "success";
+                TempData["msg"] = "Jogo atualizado com sucesso!";
                 return RedirectToAction("Index");
             }
             ViewBag.Game_id = new SelectList(db.Game, "GameId", "Descricao", emprestimoModel.Game_id);
@@ -159,7 +173,10 @@ namespace App.Game.Controllers
             PessoaGameModel pessoaGame = db.PessoaGame.Include(e => e.Pessoa).Where(e => e.game_game_id == emprestimoModel.Game_id && e.Pessoa.ApplicationUserID == user.Id).First();
             db.Emprestismo.Remove(emprestimoModel);
             pessoaGame.Emprestado = false;
+
             db.Entry(pessoaGame).State = EntityState.Modified;
+            TempData["classe"] = "success";
+            TempData["msg"] = "Jogo excluído com sucesso!";
             db.SaveChanges();
             return RedirectToAction("Index");
         }

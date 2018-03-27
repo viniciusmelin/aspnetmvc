@@ -7,7 +7,7 @@
 
 @if (@ViewBag.classe != null)
 {
-<span class="hidden informacao" data-title="@ViewBag.titulo">@ViewBag.msg</span>
+<span class="hidden informacao" data-classe="@ViewBag.classe">@ViewBag.msg</span>
 }
 
 <div class="container">
@@ -53,10 +53,10 @@
                         </td>
 
                         <td>
-                            <a href="@Url.Action("Edit", "GameModels", new { id = item.GameId })"><i class="glyphicon glyphicon-edit btn btn-warning btn-sm"></i></a>
-                            <a href="@Url.Action("Details", "GameModels", new { id = item.GameId })"><i class="glyphicon glyphicon-search btn btn-info btn-sm"></i></a>
+                            <a data-toggle="tooltip" title="Editar"   href="@Url.Action("Edit", "GameModels", new { id = item.GameId })"><i class="glyphicon glyphicon-edit btn btn-warning btn-sm"></i></a>
+                            <a data-toggle="tooltip" title="Atualizar"href="@Url.Action("Details", "GameModels", new { id = item.GameId })"><i class="glyphicon glyphicon-search btn btn-info btn-sm"></i></a>
 
-                            <a href="@Url.Action("Delete", "GameModels", new { id = item.GameId })"><i class="glyphicon glyphicon-trash btn btn-danger btn-sm"></i></a>
+                            <a data-toggle="tooltip" title="Excluir"  href="@Url.Action("Delete", "GameModels", new { id = item.GameId })"><i class="glyphicon glyphicon-trash btn btn-danger btn-sm"></i></a>
                         </td>
                     </tr>
             }
@@ -73,8 +73,7 @@
     <script language="javascript" type="text/javascript">
      $(document).ready(function () {
          if ($(".informacao").text() != "") {
-             consol.log("ffff");
-             $.notify($(".informacao").text(), "error");
+             $.notify($(".informacao").text(), $(".informacao").data("classe"));
          }
      });
     </script>

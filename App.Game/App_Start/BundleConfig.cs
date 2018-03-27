@@ -33,7 +33,15 @@ namespace App.Game
                       "~/Content/light-bootstrap-dashboard.css",
                       "~/Content/pe-icon-7-stroke.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/tema").Include(
+            bundles.Add(new StyleBundle("~/Content/csslogin").Include("~/Content/login/login.css", new CssRewriteUrlTransform()));
+           bundles.Add(new StyleBundle("~/Content/csslogin").Include(
+                "~/Content/login/form-elements.css",
+                "~/Content/login/style.css"));
+            bundles.Add(new ScriptBundle("~/Content/jslogin").Include(
+                "~/Scripts/login/jquery.backstretch.min.js", "~/Scripts/login/placeholder.js", "~/Scripts/login/scripts.js"));
+
+
+          bundles.Add(new ScriptBundle("~/bundles/tema").Include(
                 "~/Scripts/light-bootstrap-dashboard.js",
                 "~/Scripts/demo.js",
                  "~/Scripts/bootstrap-select.js",

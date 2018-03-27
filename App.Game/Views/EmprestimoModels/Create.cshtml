@@ -4,71 +4,71 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="col-md-10 col-sm-12">
+    <div class="card">
+        @using (Html.BeginForm())
+        {
 
-<h2>Create</h2>
+            if (ViewBag.classe != null)
+            {
+                <span class="hidden informacao" data-class="@ViewBag.classe">@ViewBag.msg</span>
+            }
+            @Html.AntiForgeryToken()
 
+            <div class="container">
+                <h4 class="subscribe-line">Adicionar Amigo</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>EmprestimoModel</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Game_id, "Game_id", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("Game_id", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Game_id, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model, "Game_id", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("PessoaFrindsId", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Game_id, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Data_emprestimo, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Data_emprestimo, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Data_emprestimo, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-5">
+                            <label for="PessoaFriendsId">Meus Jogos</label>
+                            @Html.DropDownList("Game_id", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-5">
+                            <label for="PessoaFriendsId">Amigos</label>
+                            @Html.DropDownList("PessoaFrindsId", null, htmlAttributes: new { @class = "form-control" })
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Data_devolucao, htmlAttributes: new { @class = "control-label col-md-2", @type = "date" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Data_devolucao, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Data_devolucao, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.Data_devolvido, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Data_devolvido, new { htmlAttributes = new { @class = "form-control", @type = "checkbox" } })
-                    @Html.ValidationMessageFor(model => model.Data_devolvido, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.Data_emprestimo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.EditorFor(model => model.Data_emprestimo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Data_emprestimo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.Data_devolucao, htmlAttributes: new { @class = "control-label col-md-2", @type = "date" })
+                            @Html.EditorFor(model => model.Data_devolucao, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Data_devolucao, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            @Html.ActionLink("Voltar", "Index", "GameModels", new { @class = "btn btn-md btn-danger" })
+                            <input type="submit" value="Save" class="btn btn-success" />
+                        </div>
+                    </div>
                 </div>
 
             </div>
-        </div>*@
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
+        }
     </div>
-</div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script>
+    $("form").validate();
+    </script>
 }

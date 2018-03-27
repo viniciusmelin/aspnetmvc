@@ -126,6 +126,9 @@ $("#todosemprestimo").DataTable({
         "tye": "POST",
         "datatype": "json",
     },
+    "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json",
+    },
     "columns": [
 
         {
@@ -164,6 +167,9 @@ $("#todosemprestimo").DataTable({
                 "url": "@Url.Action("Json", "Home")",
                 "tye": "POST",
                 "datatype": "json",
+            },
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json",
             },
             "columns": [
                 { "data": "GameId", "autowidth": true },

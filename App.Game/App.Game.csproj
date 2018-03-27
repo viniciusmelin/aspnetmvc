@@ -383,6 +383,9 @@
     <Content Include="Content\demo.css" />
     <Content Include="Content\iconsbutton.css" />
     <Content Include="Content\light-bootstrap-dashboard.css" />
+    <Content Include="Content\login\form-elements.css" />
+    <Content Include="Content\login\img\1.jpg" />
+    <Content Include="Content\login\style.css" />
     <Content Include="Content\pe-icon-7-stroke.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -429,7 +432,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\login\login.css" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -532,6 +535,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\light-bootstrap-dashboard.js" />
+    <Content Include="Scripts\login\jquery.backstretch.min.js" />
+    <Content Include="Scripts\login\placeholder.js" />
+    <Content Include="Scripts\login\scripts.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\notify.min.js" />
     <Content Include="Scripts\respond.js" />

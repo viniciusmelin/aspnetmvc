@@ -7,6 +7,10 @@
 
 
 <div class="container">
+    @if (ViewBag.classe != null)
+    {
+        <span class="hidden informacao" data-classe="@ViewBag.classe">@ViewBag.msg</span>
+    }
     <p>
         <a href="@Url.Action("Create", "EmprestimoModels")"><i class="glyphicon glyphicon-plus-sign"></i> Novo Emprestimo</a>
 
@@ -35,9 +39,6 @@
                 </th>
                 <th> Ação</th>
                 </tr>
-
-
-
                 </thead>
                 <tbody>
 
@@ -68,10 +69,10 @@
                                 @Html.DisplayFor(modelItem => item.PessoaSolicitante.Nome)
                             </td>
                             <td>
-                                <a href="@Url.Action("Edit", "EmprestimoModels", new { id = item.Id })"><i class="glyphicon glyphicon-edit btn btn-warning btn-sm"></i></a>
-                                <a href="@Url.Action("Details", "EmprestimoModels", new { id = item.Id })"><i class="glyphicon glyphicon-search btn btn-info btn-sm"></i></a>
+                                <a data-toggle="tooltip" title="Editar"    href="@Url.Action("Edit", "EmprestimoModels", new { id = item.Id })"><i class="glyphicon glyphicon-edit btn btn-warning btn-sm"></i></a>
+                                <a data-toggle="tooltip" title="Atualizar" href="@Url.Action("Details", "EmprestimoModels", new { id = item.Id })"><i class="glyphicon glyphicon-search btn btn-info btn-sm"></i></a>
 
-                                <a href="@Url.Action("Delete", "EmprestimoModels", new { id = item.Id })"><i class="glyphicon glyphicon-trash btn btn-danger btn-sm"></i></a>
+                                <a data-toggle="tooltip" title="Excluir"   href="@Url.Action("Delete", "EmprestimoModels", new { id = item.Id })"><i class="glyphicon glyphicon-trash btn btn-danger btn-sm"></i></a>
                             </td>
                         </tr>
                     }
@@ -82,3 +83,14 @@
     </div>
 
 </div>
+@section Scripts
+    {
+<script type="text/javascript">
+
+        $(document).ready(function () {
+            if ($(".informacao").text() != "") {
+                $.notify($(".informacao").text(), $(".informacao").data("classe"));
+            }
+        });
+</script>
+}

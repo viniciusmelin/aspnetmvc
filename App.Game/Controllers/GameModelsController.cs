@@ -22,9 +22,10 @@ namespace App.Game.Controllers
         public ActionResult Index()
         {
             PessoaModel pessoa = db.Pessoa.Where(d=> d.ApplicationUserID == user.Id).First();
-
+            ViewBag.classe = TempData["classe"];
+            ViewBag.msg = TempData["msg"];
             ViewBag.Title = "Inicial";
-            IEnumerable<GameModel> c = db.PessoaGame.Where(e => e.pessoa_pessoa_id == pessoa.Id).Select(e => e.Game);
+            IEnumerable<GameModel> c = db.PessoaGame.Where(e => e.Pessoa.Id == pessoa.Id).Select(e => e.Game);
 
 
             return View(c.ToList());
@@ -72,8 +73,8 @@ namespace App.Game.Controllers
                 db.PessoaGame.Add(pessoaGame);
                 db.SaveChanges();
 
-                ViewBag.classe = "success";
-                ViewBag.msg = "Jogo cadastrado com sucesso!";
+                TempData["classe"] = "success";
+                TempData["msg"] = "Jogo cadastrado com sucesso!";
 
                 return RedirectToAction("Index");
             }
@@ -107,6 +108,8 @@ namespace App.Game.Controllers
             {
                 db.Entry(gameModel).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["classe"] = "success";
+                TempData["msg"] = "Jogo atualizado com sucesso!";
                 return RedirectToAction("Index");
             }
             return View(gameModel);
@@ -140,7 +143,7 @@ namespace App.Game.Controllers
 
             if (emprestado > 0)
             {
-                ModelState.AddModelError("Descricao", "Não é Possível Excluir");
+                ModelState.AddModelError("Descricao", "Não é Possível Excluir, pois jogo esta emprestado!");
                 
                 return View(gameModel);
             }
@@ -149,8 +152,8 @@ namespace App.Game.Controllers
             db.PessoaGame.Remove(pessoagame);
             db.Game.Remove(gameModel);
             db.SaveChanges();
-            this.TempData["classe"] ="success";
-            this.TempData["msg"] = "Jogo excluído com sucesso!";
+            TempData["classe"] ="success";
+            TempData["msg"] = "Jogo excluído com sucesso!";
             return RedirectToAction("Index");
         }
 
