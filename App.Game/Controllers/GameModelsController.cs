@@ -58,38 +58,27 @@ namespace App.Game.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "GameId,Descricao")] GameModel gameModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                PessoaModel pessoa = db.Pessoa.Where(c => c.ApplicationUserID == user.Id).First();
+                db.Game.Add(gameModel);
+                PessoaGameModel pessoaGame = new PessoaGameModel
                 {
-                    PessoaModel pessoa = db.Pessoa.Where(c => c.ApplicationUserID == user.Id).First();
-                    db.Game.Add(gameModel);
-                    PessoaGameModel pessoaGame = new PessoaGameModel
-                    {
-                        Pessoa = pessoa,
-                        Game = gameModel,
-                        game_game_id = gameModel.GameId,
-                        pessoa_pessoa_id = pessoa.Id
-                    };
-                    db.PessoaGame.Add(pessoaGame);
-                    db.SaveChanges();
+                    Pessoa = pessoa,
+                    Game = gameModel,
+                    game_game_id = gameModel.GameId,
+                    pessoa_pessoa_id = pessoa.Id
+                };
+                db.PessoaGame.Add(pessoaGame);
+                db.SaveChanges();
 
-                    TempData["classe"] = "success";
-                    TempData["msg"] = "Jogo cadastrado com sucesso!";
-
-                    return RedirectToAction("Index");
-                }
-
-                return View(gameModel);
-            }
-            catch (Exception)
-            {
-                TempData["classe"] = "error";
-                TempData["msg"] = "Não foi possível cadastrar o jogo!";
+                TempData["classe"] = "success";
+                TempData["msg"] = "Jogo cadastrado com sucesso!";
 
                 return RedirectToAction("Index");
             }
 
+            return View(gameModel);
         }
 
         // GET: GameModels/Edit/5
@@ -114,25 +103,15 @@ namespace App.Game.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "GameId,Descricao")] GameModel gameModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    db.Entry(gameModel).State = EntityState.Modified;
-                    db.SaveChanges();
-                    TempData["classe"] = "success";
-                    TempData["msg"] = "Jogo atualizado com sucesso!";
-                    return RedirectToAction("Index");
-                }
-                return View(gameModel);
-            }
-            catch (Exception)
-            {
-                TempData["classe"] = "error";
-                TempData["msg"] = "Não foi possível atualizar jogo!";
+                db.Entry(gameModel).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["classe"] = "success";
+                TempData["msg"] = "Jogo atualizado com sucesso!";
                 return RedirectToAction("Index");
             }
-
+            return View(gameModel);
         }
 
         // GET: GameModels/Delete/5
@@ -155,35 +134,26 @@ namespace App.Game.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            try
+
+            GameModel gameModel = db.Game.Find(id);
+            
+            
+            var emprestado = (from p in db.Emprestismo where p.Game_id == gameModel.GameId select p).Count();
+
+            if (emprestado > 0)
             {
-                GameModel gameModel = db.Game.Find(id);
-
-
-                var emprestado = (from p in db.Emprestismo where p.Game_id == gameModel.GameId select p).Count();
-
-                if (emprestado > 0)
-                {
-                    ModelState.AddModelError("Descricao", "Não é Possível Excluir, pois jogo esta emprestado!");
-
-                    return View(gameModel);
-                }
-                PessoaGameModel pessoagame = db.PessoaGame.Where(e => e.game_game_id == gameModel.GameId && e.pessoa_pessoa_id == 1).First();
-
-                db.PessoaGame.Remove(pessoagame);
-                db.Game.Remove(gameModel);
-                db.SaveChanges();
-                TempData["classe"] = "success";
-                TempData["msg"] = "Jogo excluído com sucesso!";
-                return RedirectToAction("Index");
+                ModelState.AddModelError("Descricao", "Não é Possível Excluir, pois jogo esta emprestado!");
+                
+                return View(gameModel);
             }
-            catch (Exception)
-            {
-                TempData["classe"] = "error";
-                TempData["msg"] = "Não foi possível excluir o jogo";
-                return RedirectToAction("Index");
-            }
+            PessoaGameModel pessoagame = db.PessoaGame.Where(e => e.game_game_id == gameModel.GameId && e.pessoa_pessoa_id == 1).First();
 
+            db.PessoaGame.Remove(pessoagame);
+            db.Game.Remove(gameModel);
+            db.SaveChanges();
+            TempData["classe"] ="success";
+            TempData["msg"] = "Jogo excluído com sucesso!";
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

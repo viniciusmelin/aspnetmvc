@@ -110,24 +110,15 @@ namespace App.Game.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "PessoaMeId,PessoaFriendsId")] AmigoModel amigoModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    db.Entry(amigoModel).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                ViewBag.PessoaFriendsId = new SelectList(db.Pessoa, "Id", "Nome", amigoModel.PessoaFriendsId);
-                ViewBag.PessoaMeId = new SelectList(db.Pessoa, "Id", "Nome", amigoModel.PessoaMeId);
-                return View(amigoModel);
+                db.Entry(amigoModel).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
+            ViewBag.PessoaFriendsId = new SelectList(db.Pessoa, "Id", "Nome", amigoModel.PessoaFriendsId);
+            ViewBag.PessoaMeId = new SelectList(db.Pessoa, "Id", "Nome", amigoModel.PessoaMeId);
+            return View(amigoModel);
         }
 
         // GET: AmigoModels/Delete/5

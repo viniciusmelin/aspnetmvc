@@ -212,7 +212,6 @@
     <Compile Include="Models\PessoaModel.cs" />
     <Compile Include="Models\PessoaGameModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Servico\PessoaServico.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
