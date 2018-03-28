@@ -57,29 +57,40 @@ namespace App.Game.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PessoaMeId,PessoaFriendsId")] AmigoModel amigoModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-
-                if (db.PessoaAmigo.Where(e => e.PessoaMe.Id == amigoModel.PessoaMeId && e.PessoaFriendsId == amigoModel.PessoaFriendsId).Count() > 0)
+                if (ModelState.IsValid)
                 {
-                    ViewBag.PessoaFriendsId = new SelectList(db.Pessoa.Where(e => e.ApplicationUserID != user.Id), "Id", "Nome", amigoModel.PessoaFriends);
-                    ViewBag.PessoaMeId = new SelectList(db.Pessoa.Where(e => e.ApplicationUser.Id == user.Id), "Id", "Nome", amigoModel.PessoaMe);
 
-                    ViewBag.classe = "error";
-                    ViewBag.msg = "Você já cdastrou este amigo!";
-                    return View(amigoModel);
+                    if (db.PessoaAmigo.Where(e => e.PessoaMe.Id == amigoModel.PessoaMeId && e.PessoaFriendsId == amigoModel.PessoaFriendsId).Count() > 0)
+                    {
+                        ViewBag.PessoaFriendsId = new SelectList(db.Pessoa.Where(e => e.ApplicationUserID != user.Id), "Id", "Nome", amigoModel.PessoaFriends);
+                        ViewBag.PessoaMeId = new SelectList(db.Pessoa.Where(e => e.ApplicationUser.Id == user.Id), "Id", "Nome", amigoModel.PessoaMe);
+
+                        ViewBag.classe = "error";
+                        ViewBag.msg = "Você já cdastrou este amigo!";
+                        return View(amigoModel);
+                    }
+
+                    TempData["classe"] = "success";
+                    TempData["msg"] = "Amigo Cadastrado!";
+                    db.PessoaAmigo.Add(amigoModel);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
 
-                TempData["classe"] = "success";
-                TempData["msg"] = "Amigo Cadastrado!";
-                db.PessoaAmigo.Add(amigoModel);
-                db.SaveChanges();
+                ViewBag.PessoaFriendsId = new SelectList(db.Pessoa.Where(e => e.ApplicationUserID != user.Id), "Id", "Nome", amigoModel.PessoaFriends);
+                ViewBag.PessoaMeId = new SelectList(db.Pessoa.Where(e => e.ApplicationUser.Id == user.Id), "Id", "Nome", amigoModel.PessoaMe);
+                return View(amigoModel);
+            }
+            catch (Exception)
+            {
+
+                TempData["classe"] = "error";
+                TempData["msg"] = "Não foi possível cadastrar amigo!";
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PessoaFriendsId = new SelectList(db.Pessoa.Where(e => e.ApplicationUserID != user.Id), "Id", "Nome",amigoModel.PessoaFriends);
-            ViewBag.PessoaMeId = new SelectList(db.Pessoa.Where(e => e.ApplicationUser.Id == user.Id), "Id", "Nome",amigoModel.PessoaMe);
-            return View(amigoModel);
         }
 
         // GET: AmigoModels/Edit/5
@@ -110,6 +121,7 @@ namespace App.Game.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "PessoaMeId,PessoaFriendsId")] AmigoModel amigoModel)
         {
+            
             if (ModelState.IsValid)
             {
                 db.Entry(amigoModel).State = EntityState.Modified;
@@ -141,12 +153,23 @@ namespace App.Game.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id, int? idamigo)
         {
-            AmigoModel amigoModel = db.PessoaAmigo.Find(id,idamigo);
-            db.PessoaAmigo.Remove(amigoModel);
-            db.SaveChanges();
-            TempData["classe"] = "success";
-            TempData["msg"] = "Amigo Removido com sucesso!";
-            return RedirectToAction("Index");
+            try
+            {
+                AmigoModel amigoModel = db.PessoaAmigo.Find(id, idamigo);
+                db.PessoaAmigo.Remove(amigoModel);
+                db.SaveChanges();
+                TempData["classe"] = "success";
+                TempData["msg"] = "Amigo Removido com sucesso!";
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+
+                TempData["classe"] = "error";
+                TempData["msg"] = "Não foi possível excluir amigo!";
+                return RedirectToAction("Index");
+            }
+
         }
 
         protected override void Dispose(bool disposing)

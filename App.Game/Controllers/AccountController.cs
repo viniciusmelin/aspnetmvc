@@ -155,17 +155,18 @@ namespace App.Game.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
-                var pessoa = new PessoaModel();
-                pessoa = model.Pessoa;
-               // pessoa.ApplicationUser = user;
-                pessoa.ApplicationUserID = user.Id;
-                dbContext.Pessoa.Add(pessoa);
-                await dbContext.SaveChangesAsync();
+
 
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
+                    var pessoa = new PessoaModel();
+                    pessoa = model.Pessoa;
+                    // pessoa.ApplicationUser = user;
+                    pessoa.ApplicationUserID = user.Id;
+                    dbContext.Pessoa.Add(pessoa);
+                    await dbContext.SaveChangesAsync();
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

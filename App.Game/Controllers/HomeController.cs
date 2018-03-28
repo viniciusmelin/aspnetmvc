@@ -18,16 +18,11 @@ namespace App.Game.Controllers
          {
             IList<PessoaGameModel> pessoaGame = db.PessoaGame.Include(e => e.Pessoa).Include(e => e.Game).ToList();
 
-            //ViewIndexModel t = new ViewIndexModel();
-            //t.PessoaGame = pessoaGame;
-            
-            
             return View(pessoaGame);
         }
 
         public JsonResult Json()
         {
-            //var te = db.PessoaGame.Include(e => e.Pessoa).Include(e => e.Game).ToList();
             var game = db.Game.ToList();
             
             return Json(new { data = game}, JsonRequestBehavior.AllowGet);

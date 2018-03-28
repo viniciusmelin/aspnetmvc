@@ -59,7 +59,7 @@ namespace App.Game.Controllers
             if (game.Count() == 0)
             {
                 TempData["classe"] = "warning";
-                TempData["msg"] = "Todos seus jogos estão emprestados!";
+                TempData["msg"] = "Todos seus jogos estão emprestados ou não possui nenhum jogo!";
                 return RedirectToAction("Index");
             }
             if (amigos.Count()==0)
@@ -80,47 +80,68 @@ namespace App.Game.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Game_id,Data_emprestimo,Data_devolucao,Data_devolvido")] EmprestimoModel emprestimoModel, int PessoaFrindsId)
         {
-            if (ModelState.IsValid)
+            try
             {
-
-                emprestimoModel.PessoaSolicitante = db.Pessoa.Find(PessoaFrindsId);
-                emprestimoModel.PessoaSolicitada = db.Pessoa.Where(e => e.ApplicationUserID == user.Id).First();
-                db.Emprestismo.Add(emprestimoModel);
-                PessoaGameModel emprestado = new PessoaGameModel()
+                if (ModelState.IsValid)
                 {
-                    pessoa_pessoa_id = emprestimoModel.PessoaSolicitada.Id,
-                    game_game_id = emprestimoModel.Game_id,
-                    Emprestado = true
-                };
-                db.Entry(emprestado).State = EntityState.Modified;
 
-                TempData["classe"] = "success";
-                TempData["msg"] = "Emprestimo realizado com sucesso!";
-                db.SaveChanges();
+                    emprestimoModel.PessoaSolicitante = db.Pessoa.Find(PessoaFrindsId);
+                    emprestimoModel.PessoaSolicitada = db.Pessoa.Where(e => e.ApplicationUserID == user.Id).First();
+                    db.Emprestismo.Add(emprestimoModel);
+                    PessoaGameModel emprestado = new PessoaGameModel()
+                    {
+                        pessoa_pessoa_id = emprestimoModel.PessoaSolicitada.Id,
+                        game_game_id = emprestimoModel.Game_id,
+                        Emprestado = true
+                    };
+                    db.Entry(emprestado).State = EntityState.Modified;
+
+                    TempData["classe"] = "success";
+                    TempData["msg"] = "Emprestimo realizado com sucesso!";
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.PessoaFrindsId = new SelectList(db.PessoaAmigo.Include(a => a.PessoaFriends).Include(a => a.PessoaMe).Where(a => a.PessoaMe.ApplicationUser.Id == user.Id).Select(a => a.PessoaFriends), "Id", "Nome");
+                ViewBag.Game_id = new SelectList(db.Game, "GameId", "Descricao", emprestimoModel.Game_id);
+                return View(emprestimoModel);
+            }
+            catch (Exception)
+            {
+                TempData["classe"] = "error";
+                TempData["msg"] = "Não foi possível cadastrar emprestimo";
                 return RedirectToAction("Index");
             }
-            ViewBag.PessoaFrindsId = new SelectList(db.PessoaAmigo.Include(a => a.PessoaFriends).Include(a=>a.PessoaMe).Where(a => a.PessoaMe.ApplicationUser.Id == user.Id).Select(a => a.PessoaFriends), "Id", "Nome");
-            ViewBag.Game_id = new SelectList(db.Game, "GameId", "Descricao", emprestimoModel.Game_id);
-            return View(emprestimoModel);
+
         }
 
         // GET: EmprestimoModels/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                EmprestimoModel emprestimoModel = db.Emprestismo.Find(id);
+                if (emprestimoModel == null)
+                {
+                    return HttpNotFound();
+                }
+
+
+                ViewBag.PessoaFrindsId = new SelectList(db.PessoaAmigo.Include(a => a.PessoaFriends).Where(a => a.PessoaMeId == 1).Select(a => a.PessoaFriends), "Id", "Nome");
+                ViewBag.Game_id = new SelectList(db.Game, "GameId", "Descricao", emprestimoModel.Game_id);
+                return View(emprestimoModel);
             }
-            EmprestimoModel emprestimoModel = db.Emprestismo.Find(id);
-            if (emprestimoModel == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+
+                TempData["classe"] = "error";
+                TempData["msg"] = "Não foi possível encontrar  emprestimo";
+                return RedirectToAction("Index");
             }
 
-            
-            ViewBag.PessoaFrindsId = new SelectList(db.PessoaAmigo.Include(a => a.PessoaFriends).Where(a => a.PessoaMeId == 1).Select(a => a.PessoaFriends), "Id", "Nome");
-            ViewBag.Game_id = new SelectList(db.Game, "GameId", "Descricao", emprestimoModel.Game_id);
-            return View(emprestimoModel);
         }
 
         // POST: EmprestimoModels/Edit/5
@@ -130,23 +151,35 @@ namespace App.Game.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Game_id,Data_emprestimo,Data_devolucao,Data_devolvido")] EmprestimoModel emprestimoModel, int PessoaFrindsId)
         {
-            emprestimoModel.PessoaSolicitante = db.Pessoa.Find(PessoaFrindsId);
-            emprestimoModel.PessoaSolicitada = db.Pessoa.Find(1);
-            emprestimoModel.Game = db.Game.Find(emprestimoModel.Game_id);
-            emprestimoModel.Game_id = emprestimoModel.Game.GameId;
-            emprestimoModel.Solicitado_id = emprestimoModel.PessoaSolicitada.Id;
-            emprestimoModel.Solicitante_id = emprestimoModel.PessoaSolicitante.Id;
-
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(emprestimoModel).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["classe"] = "success";
-                TempData["msg"] = "Jogo atualizado com sucesso!";
+                PessoaModel pessoa = db.Pessoa.Where(e => e.ApplicationUserID == user.Id).First();
+                emprestimoModel.PessoaSolicitante = db.Pessoa.Find(PessoaFrindsId);
+                emprestimoModel.PessoaSolicitada = db.Pessoa.Find(pessoa.Id);
+                emprestimoModel.Game = db.Game.Find(emprestimoModel.Game_id);
+                emprestimoModel.Game_id = emprestimoModel.Game.GameId;
+                emprestimoModel.Solicitado_id = emprestimoModel.PessoaSolicitada.Id;
+                emprestimoModel.Solicitante_id = emprestimoModel.PessoaSolicitante.Id;
+
+                if (ModelState.IsValid)
+                {
+                    db.Entry(emprestimoModel).State = EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["classe"] = "success";
+                    TempData["msg"] = "Jogo atualizado com sucesso!";
+                    return RedirectToAction("Index");
+                }
+                ViewBag.Game_id = new SelectList(db.Game, "GameId", "Descricao", emprestimoModel.Game_id);
+                return View(emprestimoModel);
+            }
+            catch (Exception)
+            {
+
+                TempData["classe"] = "error";
+                TempData["msg"] = "Não foi possível atualizar emprestimo!";
                 return RedirectToAction("Index");
             }
-            ViewBag.Game_id = new SelectList(db.Game, "GameId", "Descricao", emprestimoModel.Game_id);
-            return View(emprestimoModel);
+
         }
 
         // GET: EmprestimoModels/Delete/5
@@ -169,26 +202,27 @@ namespace App.Game.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            EmprestimoModel emprestimoModel = db.Emprestismo.Find(id);
-            PessoaGameModel pessoaGame = db.PessoaGame.Include(e => e.Pessoa).Where(e => e.game_game_id == emprestimoModel.Game_id && e.Pessoa.ApplicationUserID == user.Id).First();
-            db.Emprestismo.Remove(emprestimoModel);
-            pessoaGame.Emprestado = false;
+            try
+            {
+                EmprestimoModel emprestimoModel = db.Emprestismo.Find(id);
+                PessoaGameModel pessoaGame = db.PessoaGame.Include(e => e.Pessoa).Where(e => e.game_game_id == emprestimoModel.Game_id && e.Pessoa.ApplicationUserID == user.Id).First();
+                db.Emprestismo.Remove(emprestimoModel);
+                pessoaGame.Emprestado = false;
 
-            db.Entry(pessoaGame).State = EntityState.Modified;
-            TempData["classe"] = "success";
-            TempData["msg"] = "Jogo excluído com sucesso!";
-            db.SaveChanges();
-            return RedirectToAction("Index");
+                db.Entry(pessoaGame).State = EntityState.Modified;
+                TempData["classe"] = "success";
+                TempData["msg"] = "Emprestimo excluído com sucesso!";
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                TempData["classe"] = "error";
+                TempData["msg"] = "Não foi possível excluir emprestimo!";
+                return RedirectToAction("Index");
+            }
+
         }
-
-        //[HttpPost,ActionName("CadastarAmigo")]
-        //[ValidateAntiForgeryToken]
-        public ActionResult Amigo()
-        {
-
-            return View("Amigo");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
